@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% block title %}{{post.text|truncatechars:30}}{% endblock title %}
+{% block content %}
+    <main>
+      <div class="container py-5">
+      <div class="row">
+        <aside class="col-12 col-md-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Дата публикации: {{post.pub_date|date:"d E Y"}} 
+            </li>
+            {% if post.group %}  
+            <li class="list-group-item">
+              Группа: {{ post.group }}
+              <a href="{% url 'posts:group_list' post.group.slug %}">
+                все записи группы
+              </a>
+            {% endif %}
+            </li>
+            <li class="list-group-item">
+              Автор: <a href="{% url 'posts:profile' post.author %}">
+              {{ post.author.get_full_name }}
+              </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Всего постов автора: <span >{{ sum }}</span>
+            </li>
+            <li class="list-group-item">
+              <a href="{% url 'posts:author_posts' post.author_id %}">
+                все посты пользователя
+              </a>
+            </li>
+          </ul>
+        </aside>
+        {% thumbnail post.image "200x100" crop="center" upscale=True as im %}
+              <img class="card-img my-2" src="{{ im.url }}">
+            {% endthumbnail %}
+        <article class="col-12 col-md-9">
+          <p>
+           {{ post.text }}
+          </p>
+          <div class="container py-5">
+          <!-- эта кнопка видна только автору -->
+          {% if request.user == post.author %}
+          <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">
+            редактировать
+          </a>
+          {% endif %}
+          {% include 'includes/comments.html' %}
+        </div>         
+        </article>
+      </div>
+    </div>
+    </main>
+    {% endblock content %}

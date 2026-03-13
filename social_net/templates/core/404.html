@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Страница не найдена{% endblock title %}
+{% block content %}
+
+  <p>
+  <h1>О, нет! Страница не найдена</h1>
+  </p>
+  <p>Страницы с адресом {{ path }} не существует</p>
+  <a href="{% url 'posts:index' %}">Перейти на главную</a>
+
+{% endblock content %}
