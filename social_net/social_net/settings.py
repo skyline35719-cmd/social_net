@@ -40,6 +40,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'posts.apps.PostsConfig',
+    'api.apps.ApiConfig',
     'sorl.thumbnail',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -150,6 +153,12 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
 
 

@@ -20,9 +20,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf import settings
 from django.conf.urls.static import static
+from api.urls import router
+from rest_framework.authtoken import views
 
 urlpatterns = [
     path('', include('posts.urls', namespace='posts')),
+    path('api/api-token-auth/', views.obtain_auth_token),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('about/', include('about.urls', namespace='about')),
     path('auth/', include('users.urls')),
